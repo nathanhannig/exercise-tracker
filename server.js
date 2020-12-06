@@ -9,9 +9,14 @@ const Exercise = require('./models/exercise');
 
 const app = express();
 const port = process.env.PORT;
-const mongoDB = process.env.MLAB_URI;
+const mongoDB = process.env.MONGODB_URI;
 
-mongoose.connect(mongoDB);
+mongoose.connect(mongoDB, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true
+});
 const db = mongoose.connection;
 db.on('error', (err) => { console.log('Mongo DB connection error', err); });
 db.once('open', () => { console.log('Mongo DB connected.'); });
